@@ -1,0 +1,66 @@
+import SwiftUI
+struct ContentView: View {
+    @State var nome = " "
+    @State private var ShowAlert = false
+    @State private var buttonText = "Ok"
+    var body: some View {
+        ZStack {
+            ZStack{
+                Image(.capturaDeTela20230118Às225948)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 875)
+                    .blur(radius: 3.0)
+                
+                Rectangle()
+                    .fill(.white)
+                    .opacity(0.75)
+                }
+            VStack {
+                Text("Bem vindo, " + nome)
+                    .padding(.top, 60)
+                    .font(.title)
+                TextField("Nome", text: $nome)
+                    .multilineTextAlignment(.center)
+                
+                Spacer()
+                
+                
+            }
+            VStack {
+                Button("Entrar"){
+                    ShowAlert = true
+                    buttonText = "Vamos lá!"
+                }
+                .alert(isPresented: $ShowAlert){
+                    Alert(
+                        title: Text("Alerta!"),
+                        message: Text("Voce ira iniciar o desafio agora"),
+                        dismissButton: .default(Text("Vamos lá!"))
+                    
+                    )
+                }
+                    .padding(.top, 760)
+                
+            }
+                VStack{
+                    Image(.logo)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 240)
+                        .shadow(color: .black, radius: 20)
+                    Image(.truck)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 240)
+                        .shadow(color: .black, radius: 20)
+                }
+            }
+            
+        }
+        
+    }
+
+#Preview {
+    ContentView()
+}
