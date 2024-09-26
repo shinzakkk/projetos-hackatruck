@@ -1,0 +1,99 @@
+import SwiftUI
+
+
+struct ContentView: View {
+    @State var cor: Color = .normal
+    @State var sPeso: String = ""
+    @State var sAltura: String = ""
+    @State var imc: Double = 1
+    @State var backgroundcolor = Color.normal
+    @State var descricao = " "
+    
+    
+    var body: some View{
+        ZStack {
+            VStack{
+                Text("Calculadora de IMC")
+                    .font(.title)
+                    .padding(.bottom, 700)
+            }
+            
+            VStack(alignment: .center){
+                TextField("Peso", text: $sPeso)
+                    .keyboardType(.decimalPad)
+                    .padding()
+                    .background(Color.white.opacity(1))
+                    .cornerRadius(10.0)
+                    .frame(width: 350)
+                    .padding(.bottom, 550)
+                    .multilineTextAlignment(.center)
+                
+            }
+            VStack(alignment: .center){
+                TextField("Altura", text: $sAltura)
+                    .keyboardType(.decimalPad)
+                    .padding()
+                    .background(Color.white.opacity(1))
+                    .cornerRadius(10.0)
+                    .frame(width: 350)
+                    .padding(.bottom, 350)
+                    .multilineTextAlignment(.center)
+                    }
+                VStack{
+                    Button("Calcular"){
+                        guard let peso = Double(sPeso), let altura = Double(sAltura), altura > 0 else {
+                                descricao = "Erro"
+                                cor = .erro
+                                return
+                        }
+                        imc = peso/pow(altura, 2)
+                        switch imc{
+                        case 1...18.5:
+                            cor = Color.baixopeso
+                            descricao = "Baixo peso"
+                        case 18.5..<25:
+                            cor = Color.normal
+                            descricao = "Normal"
+                        case 25..<30:
+                            cor = Color.sobrepeso
+                            descricao = "Sobrepeso"
+                        case 30...1000:
+                            cor = Color.obesidade
+                            descricao = "Obesidade"
+                            
+                        default:
+                            cor = Color.erro
+                            descricao = "Erro"
+                        }
+                        
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .padding(.bottom, 200)
+                    
+                    
+                }
+                VStack{
+                    Text(descricao)
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                }
+                
+                VStack{
+                    
+                    
+                    Image(.tabelaIMC)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 400, height: 178)
+                        .padding(.top, 580)
+                }
+            }
+            .frame(width: 600.0, height: 800.0)
+            .background(Color(cor))
+        }
+    }
+    #Preview {
+        ContentView()
+    }
+
